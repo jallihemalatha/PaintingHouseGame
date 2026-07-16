@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Paint House 3D</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="game-container">
+  <div id="brush">🖌️</div>
+    <header>
+       <button id="dayNightBtn"        onclick="toggleDayNight()">
+🌙 Night Mode
+</button>
+        <h1>🏡 Real Paint House 3D</h1>
+        <button onclick="startRain()">🌧️                   Rain</button>
+        <div class="top-bar">
+
+            <div class="box">
+                ⭐ Score
+                <span id="score">0</span>
+            </div>
+
+            <div class="box">
+                🪙 Coins
+                <span id="coins">0</span>
+            </div>
+              <h3>🏆 High Score : <span id="highScore">0</span></h3>
+            <div class="box">
+                ⏱ Time
+                <span id="timer">60</span>
+            </div>
+
+        </div>
+
+    </header>
+
+    <section class="challenge">
+
+        <h2 id="challengeText">
+            Paint House : RED
+        </h2>
+
+    </section>
+
+    <section class="world">
+
+        <div class="sun"></div>
+         <div id="rain"></div>
+
+       <div id="rainbow">🌈</div>
+      
+        <div class="bird bird1">🕊️</div>
+        <div class="bird bird2">🕊️</div>
+        <div class="bird bird3">🕊️</div>
+      
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+
+        <div class="tree tree-left"></div>
+        <div class="tree tree-right"></div>
+      
+        <div id="painter">👷‍♂️</div>
+        <div class="house">
+
+            <div id="roof" class="roof"></div>
+
+            <div id="wall" class="wall">
+              
+                <div id="paintContainer"></div>
+              
+                <div id="window1" class="window left"></div>
+
+                <div id="window2" class="window right"></div>
+
+                <div id="door" class="door"></div>
+
+            </div>
+
+        </div>
+        <div class="garage">
+    <div class="garage-door"></div>
+</div>
+
+<div class="car">🚗</div>
+        <div class="garden">
+
+  <div class="flower">🌸</div>
+  <div class="flower">🌼</div>
+  <div class="flower">🌺</div>
+  <div class="flower">🌻</div>
+  <div class="flower">🌷</div>
+
+</div>
+    </section>
+      <div class="pickerBox">
+    <label><b>🎨 Choose Any Color:</b></label><br>
+    <input type="color" id="colorPicker" value="#ff0000">
+    <button onclick="paintSelectedColor()">Paint</button>
+        <button onclick="setMode('window')">🪟 Paint Windows</button>
+</div>
+    <div class="paintMode">
+
+<button onclick="setMode('wall')">🏠 Paint Wall</button>
+
+<button onclick="setMode('roof')">🏡 Paint Roof</button>
+      <button onclick="setMode('door')">🚪 Paint Door</button>
+
+</div>
+    
+    <section class="color-panel">
+
+        <button onclick="paintHouse('red')">Red</button>
+
+        <button onclick="paintHouse('blue')">Blue</button>
+
+        <button onclick="paintHouse('green')">Green</button>
+
+        <button onclick="paintHouse('yellow')">Yellow</button>
+
+        <button onclick="paintHouse('orange')">Orange</button>
+
+        <button onclick="paintHouse('purple')">Purple</button>
+
+        <button onclick="paintHouse('pink')">Pink</button>
+
+        <button onclick="paintHouse('brown')">Brown</button>
+
+        <button onclick="paintHouse('white')">White</button>
+
+        <button onclick="paintHouse('black')">Black</button>
+
+    </section>
+
+    <div id="message"></div>
+
+    <button id="restartBtn">
+      <div class="levelBox">
+    🏆 Level :
+    <span id="level">1</span>
+        
+</div>
+      
+        Restart Game
+      
+    </button>
+
+</div>
+
+<script src="script.js"></script>
+  <audio id="paintSound">
+  <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" type="audio/mpeg">
+</audio>
+<audio id="victorySound">
+    <source src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3" type="audio/mpeg">
+</audio>
+  <audio id="timerEndSound">
+    <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" type="audio/mpeg">
+</audio>
+</body>
+</html>

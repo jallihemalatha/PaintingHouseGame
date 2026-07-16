@@ -1,0 +1,279 @@
+let score = 0;
+let highScore = localStorage.getItem("highScore") || 0;
+
+document.getElementById("highScore").innerHTML = highScore;
+
+let coins = 0;
+let time = 60;
+let level = 1;
+let paintMode="wall";
+const levelTargets = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500];
+
+const levelTimes = [60, 55, 50, 45, 40, 35, 30, 25, 20, 15];
+
+const colors = [
+"red","blue","green","yellow",
+"orange","purple","pink",
+"brown","white","black"
+];
+
+let targetColor = randomColor();
+
+document.getElementById("challengeText").innerHTML =
+"Paint House : " + targetColor.toUpperCase();
+
+function randomColor(){
+    return colors[Math.floor(Math.random()*colors.length)];
+}
+
+function paintHouse(color){
+  let sound = document.getElementById("paintSound");
+sound.currentTime = 0;
+sound.play();
+    if(paintMode=="wall"){
+
+    wall.style.background = color;
+    
+}
+else if(paintMode=="roof"){
+
+    roof.style.borderBottomColor = color;
+
+}
+else if(paintMode=="door"){
+
+    door.style.background = color;
+
+}
+  else if (paintMode == "window") {
+
+    window1.style.background = color;
+    window2.style.background = color;
+
+}
+  movePainter();
+  createSplash(color);
+  splash();
+    if(paintMode === "wall"){
+
+    document.getElementById("wall").style.background = color;
+
+}else{
+
+    document.getElementById("roof").style.borderBottomColor = color;
+
+}
+
+    if(color===targetColor){
+
+         score += 10;
+    coins += 5;
+
+    let victory = document.getElementById("victorySound");
+    victory.currentTime = 0;
+    victory.play();
+  
+       if(level < 10 && score >= levelTargets[level - 1]){
+
+    level++;
+
+    document.getElementById("level").innerHTML = level;
+
+    time = levelTimes[level - 1];
+
+    document.getElementById("timer").innerHTML = time;
+
+    document.getElementById("message").innerHTML =
+    "🎉 Welcome to Level " + level;
+
+}
+        coins +=5;
+
+        document.getElementById("message").innerHTML="✅ Correct!";
+
+        targetColor=randomColor();
+
+        document.getElementById("challengeText").innerHTML=
+        "Paint House : "+targetColor.toUpperCase();
+
+    }else{
+
+        document.getElementById("message").innerHTML="❌ Wrong Color";
+
+        if(score>0){
+            score-=2;
+        }
+
+    }
+
+    document.getElementById("score").innerHTML=score;
+  if(score > highScore){
+
+    highScore = score;
+
+    localStorage.setItem("highScore", highScore);
+
+    document.getElementById("highScore").innerHTML = highScore;
+
+}
+    document.getElementById("coins").innerHTML=coins;
+
+}
+
+let gameTimer=setInterval(function(){
+
+time--;
+
+document.getElementById("timer").innerHTML=time;
+
+if(time<=0){
+
+clearInterval(gameTimer);
+
+    let timerSound = document.getElementById("timerEndSound");
+    timerSound.currentTime = 0;
+    timerSound.play();
+
+   if(level == 10 && score >= 500){
+
+        document.getElementById("message").innerHTML =
+        "🏆 Congratulations! You Finished All 10 Levels!";
+
+    }else{
+
+        document.getElementById("message").innerHTML =
+        "🏆 Game Over! Final Score : " + score;
+
+    }
+
+}
+
+document.getElementById("restartBtn").onclick=function(){
+
+location.reload();
+
+};
+const brush=document.getElementById("brush");
+
+document.addEventListener("mousemove",function(e){
+
+brush.style.left=e.clientX+"px";
+
+brush.style.top=e.clientY+"px";
+
+});
+},1000);
+function splash(){
+
+const wall=document.getElementById("wall");
+
+wall.classList.add("paintFlash");
+
+setTimeout(function(){
+
+wall.classList.remove("paintFlash");
+
+},400);
+
+}
+function createSplash(color){
+
+const container=document.getElementById("paintContainer");
+
+for(let i=0;i<12;i++){
+
+const dot=document.createElement("div");
+
+dot.className="paintDrop";
+
+dot.style.background=color;
+
+dot.style.left=Math.random()*250+"px";
+
+dot.style.top=Math.random()*180+"px";
+
+container.appendChild(dot);
+
+setTimeout(()=>{
+dot.remove();
+},800);
+
+}
+
+}
+function paintSelectedColor(){
+
+const color=document.getElementById("colorPicker").value;
+
+document.getElementById("wall").style.background=color;
+
+createSplash(color);
+
+}
+function movePainter(){
+
+const painter=document.getElementById("painter");
+
+painter.style.left="420px";
+
+setTimeout(()=>{
+painter.style.left="150px";
+},1200);
+
+}
+let isNight = false;
+
+function toggleDayNight(){
+
+    const body = document.body;
+    const btn = document.getElementById("dayNightBtn");
+
+    if(!isNight){
+        body.classList.add("night");
+        btn.innerHTML = "☀️ Day Mode";
+    }else{
+        body.classList.remove("night");
+        btn.innerHTML = "🌙 Night Mode";
+    }
+
+    isNight = !isNight;
+}
+function startRain(){
+
+const rain=document.getElementById("rain");
+
+rain.innerHTML="";
+
+rain.style.display="block";
+
+for(let i=0;i<120;i++){
+
+const drop=document.createElement("div");
+
+drop.className="drop";
+
+drop.style.left=Math.random()*100+"%";
+drop.style.top=Math.random()*-400+"px";
+drop.style.animationDelay=Math.random()+"s";
+
+rain.appendChild(drop);
+
+}
+
+setTimeout(()=>{
+
+rain.style.display="none";
+
+document.getElementById("rainbow").style.display="block";
+
+},5000);
+
+}
+function setMode(mode){
+
+paintMode=mode;
+
+document.getElementById("message").innerHTML=
+"🎨 Painting : "+mode.toUpperCase();
+
+}
